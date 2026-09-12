@@ -1,7 +1,7 @@
 <?php
 /**
  * Snippet Name: ISTT Phonebook
- * Version: 1.0.4
+ * Version: 1.0.5
  * Updated: 2026-09-12
  * Shortcode: [istt_phonebook]
  *
@@ -676,36 +676,37 @@ function istt_phonebook_shortcode($atts)
         #<?php echo esc_attr($id); ?> .istt-pb-sidebar-layer.open{visibility:visible;pointer-events:auto}
         #<?php echo esc_attr($id); ?> .istt-pb-sidebar-backdrop{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;border-radius:0;background:rgba(14,30,42,.3);opacity:0;transition:opacity .3s}
         #<?php echo esc_attr($id); ?> .istt-pb-sidebar-layer.open .istt-pb-sidebar-backdrop{opacity:1}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar{position:absolute;top:0;right:0;width:min(430px,100%);height:100%;overflow-y:auto;background:var(--w);box-shadow:-20px 0 60px rgba(15,35,48,.15);transform:translateX(105%);transition:transform .34s cubic-bezier(.22,1,.36,1)}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar{position:absolute;top:0;right:0;width:min(440px,100%);height:100dvh;overflow-y:auto;background:var(--w);box-shadow:-20px 0 60px rgba(15,35,48,.15);transform:translateX(105%);transition:transform .34s cubic-bezier(.22,1,.36,1);scrollbar-width:thin;scrollbar-color:var(--b) transparent}
         #<?php echo esc_attr($id); ?> .istt-pb-sidebar-layer.open .istt-pb-sidebar{transform:translateX(0)}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-top{position:sticky;top:0;z-index:2;display:flex;min-height:70px;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid var(--b);background:rgba(255,255,255,.96)}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-close{display:flex;width:44px;height:44px;align-items:center;justify-content:center;padding:0;border:1px solid var(--b);border-radius:50%;background:var(--w);font-size:24px;cursor:pointer;transition:.2s}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-top{position:sticky;top:0;z-index:2;display:flex;min-height:56px;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid var(--b);background:rgba(255,255,255,.97);backdrop-filter:blur(10px);font-size:13px;font-weight:700}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-close{display:flex;width:36px;height:36px;align-items:center;justify-content:center;padding:0;border:1px solid var(--b);border-radius:50%;background:var(--w);font-size:21px;cursor:pointer;transition:.2s}
         #<?php echo esc_attr($id); ?> .istt-pb-sidebar-close:hover{transform:rotate(90deg)}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-content{padding:34px 28px 40px}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-profile{text-align:center;animation:pbUp .4s .12s ease both}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-photo{display:flex;width:116px;height:116px;align-items:center;justify-content:center;overflow:hidden;margin:0 auto 18px;border-radius:50%;background:var(--l);color:var(--p)}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-photo .dashicons{font-size:42px}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-profile>h2{margin:0 0 8px;color:var(--t);font-size:24px}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-position{margin:0;color:var(--m);font-size:13px;line-height:1.8}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-divider{height:1px;margin:25px 0;background:var(--b)}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data{display:grid;gap:4px;margin:0;text-align:right}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data>div{padding:15px 0;border-bottom:1px solid var(--b)}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data dt{display:flex;align-items:center;gap:10px;margin-bottom:7px;color:var(--m);font-size:12px}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data dt .dashicons{width:18px;color:var(--p);font-size:18px;text-align:center}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data dd{margin:0 28px 0 0;color:var(--t);font-size:14px;font-weight:600;overflow-wrap:anywhere}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-content{padding:16px 20px 22px}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-profile{display:grid;grid-template-columns:78px minmax(0,1fr);column-gap:14px;align-items:center;text-align:right;animation:pbUp .4s .12s ease both}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-photo{display:flex;grid-column:1;grid-row:1/3;width:78px;height:78px;align-items:center;justify-content:center;overflow:hidden;margin:0;border:3px solid var(--w);border-radius:50%;background:var(--l);color:var(--p);box-shadow:0 7px 22px rgba(16,61,56,.12)}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-photo .dashicons{font-size:32px}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-profile>h2{grid-column:2;grid-row:1;align-self:end;margin:0 0 3px;color:var(--t);font-size:20px;line-height:1.45}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-position{grid-column:2;grid-row:2;align-self:start;margin:0;color:var(--m);font-size:12px;line-height:1.65}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-divider{grid-column:1/-1;height:1px;margin:13px 0;background:linear-gradient(90deg,transparent,var(--b) 15%,var(--b) 85%,transparent)}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data{display:grid;grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:0;text-align:right}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data>div{min-width:0;padding:8px 10px;border:1px solid var(--b);border-radius:10px;background:var(--l)}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data dt{display:flex;align-items:center;gap:7px;margin:0 0 3px;color:var(--m);font-size:10.5px;line-height:1.45}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data dt .dashicons{width:15px;color:var(--p);font-size:15px;text-align:center}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data dd{margin:0;color:var(--t);font-size:12.5px;font-weight:650;line-height:1.55;overflow-wrap:anywhere}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data>div:last-child{grid-column:1/-1}
         #<?php echo esc_attr($id); ?> .istt-pb-protected-email{display:inline-block;direction:rtl;unicode-bidi:bidi-override;font-weight:500}
-        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-call{display:flex;min-height:52px;align-items:center;justify-content:center;gap:10px;margin-top:25px;border-radius:9px;background:var(--p);color:var(--w);text-decoration:none;font-weight:700;transition:.2s}
+        #<?php echo esc_attr($id); ?> .istt-pb-sidebar-call{display:flex;grid-column:1/-1;min-height:42px;align-items:center;justify-content:center;gap:8px;margin-top:12px;border-radius:9px;background:var(--p);color:var(--w);text-decoration:none;font-size:13px;font-weight:700;transition:.2s}
         #<?php echo esc_attr($id); ?> .istt-pb-sidebar-call:hover{transform:translateY(-2px);background:var(--ph);color:var(--w)}
-        #<?php echo esc_attr($id); ?> .istt-pb-qr-section{margin-top:28px;padding:20px;border:1px solid var(--b);border-radius:16px;background:var(--l);text-align:right}
-        #<?php echo esc_attr($id); ?> .istt-pb-qr-title{display:flex;align-items:flex-start;gap:12px}
-        #<?php echo esc_attr($id); ?> .istt-pb-qr-title>.dashicons{margin-top:3px;color:var(--p);font-size:25px}
-        #<?php echo esc_attr($id); ?> .istt-pb-qr-title h3{margin:0 0 5px;color:var(--t);font-size:15px}
-        #<?php echo esc_attr($id); ?> .istt-pb-qr-title p{margin:0;color:var(--m);font-size:11px;line-height:1.8}
-        #<?php echo esc_attr($id); ?> .istt-pb-qr-box{display:flex;width:200px;min-height:200px;align-items:center;justify-content:center;flex-direction:column;gap:9px;margin:20px auto;padding:13px;border-radius:13px;background:var(--w);color:var(--m);text-align:center}
-        #<?php echo esc_attr($id); ?> .istt-pb-qr-box canvas,#<?php echo esc_attr($id); ?> .istt-pb-qr-box img{display:block;width:174px!important;height:174px!important}
-        #<?php echo esc_attr($id); ?> .istt-pb-vcard-download{display:flex;min-height:46px;align-items:center;justify-content:center;gap:8px;border:1px solid var(--b);border-radius:9px;background:var(--w);color:var(--t);text-decoration:none;font-size:13px}
+        #<?php echo esc_attr($id); ?> .istt-pb-qr-section{display:grid;grid-column:1/-1;grid-template-columns:144px minmax(0,1fr);grid-template-areas:"qr title" "qr download";gap:9px 13px;align-items:center;margin-top:12px;padding:10px;border:1px solid var(--b);border-radius:14px;background:linear-gradient(135deg,var(--l),var(--w));text-align:right}
+        #<?php echo esc_attr($id); ?> .istt-pb-qr-title{display:flex;grid-area:title;align-items:flex-start;gap:9px}
+        #<?php echo esc_attr($id); ?> .istt-pb-qr-title>.dashicons{margin-top:2px;color:var(--p);font-size:21px}
+        #<?php echo esc_attr($id); ?> .istt-pb-qr-title h3{margin:0 0 3px;color:var(--t);font-size:14px}
+        #<?php echo esc_attr($id); ?> .istt-pb-qr-title p{margin:0;color:var(--m);font-size:10.5px;line-height:1.65}
+        #<?php echo esc_attr($id); ?> .istt-pb-qr-box{display:flex;grid-area:qr;width:144px;min-height:144px;align-items:center;justify-content:center;flex-direction:column;gap:7px;margin:0;padding:8px;border:1px solid rgba(7,89,79,.09);border-radius:11px;background:var(--w);color:var(--m);font-size:10px;text-align:center}
+        #<?php echo esc_attr($id); ?> .istt-pb-qr-box canvas,#<?php echo esc_attr($id); ?> .istt-pb-qr-box img{display:block;width:128px!important;height:128px!important}
+        #<?php echo esc_attr($id); ?> .istt-pb-vcard-download{display:flex;grid-area:download;min-height:40px;align-items:center;justify-content:center;gap:7px;border:1px solid var(--b);border-radius:8px;background:var(--w);color:var(--t);text-decoration:none;font-size:11.5px;transition:.2s}
         #<?php echo esc_attr($id); ?> .istt-pb-vcard-download[hidden]{display:none}
-        #<?php echo esc_attr($id); ?> .istt-pb-qr-error{color:#a33c3c;font-size:12px;text-align:center}
+        #<?php echo esc_attr($id); ?> .istt-pb-qr-error{grid-area:download;color:#a33c3c;font-size:11px;text-align:center}
         body.istt-pb-sidebar-open{overflow:hidden}
         @keyframes pbUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
         @keyframes pbTag{to{opacity:1;transform:translateY(0)}}
@@ -739,11 +740,14 @@ function istt_phonebook_shortcode($atts)
             #<?php echo esc_attr($id); ?> .istt-pb-contact-phone{grid-column:2;justify-content:flex-end}
             #<?php echo esc_attr($id); ?> .istt-pb-contact-email-status{grid-column:3}
             #<?php echo esc_attr($id); ?> .istt-pb-details-button{grid-column:1/-1;min-height:46px;background:var(--al)}
-            #<?php echo esc_attr($id); ?> .istt-pb-sidebar{top:auto;right:0;bottom:0;width:100%;height:min(90dvh,820px);border-radius:24px 24px 0 0;transform:translateY(105%);box-shadow:0 -20px 60px rgba(15,35,48,.16)}
+            #<?php echo esc_attr($id); ?> .istt-pb-sidebar{top:auto;right:0;bottom:0;width:100%;height:min(94dvh,760px);border-radius:22px 22px 0 0;transform:translateY(105%);box-shadow:0 -20px 60px rgba(15,35,48,.16)}
             #<?php echo esc_attr($id); ?> .istt-pb-sidebar-layer.open .istt-pb-sidebar{transform:translateY(0)}
-            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-top{min-height:62px;padding:0 18px;border-radius:24px 24px 0 0}
-            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-content{padding:25px 20px 35px}
-            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-photo{width:96px;height:96px}
+            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-top{min-height:54px;padding:0 16px;border-radius:22px 22px 0 0}
+            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-content{padding:14px 16px 20px}
+            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-photo{width:72px;height:72px}
+            #<?php echo esc_attr($id); ?> .istt-pb-qr-section{grid-template-columns:132px minmax(0,1fr)}
+            #<?php echo esc_attr($id); ?> .istt-pb-qr-box{width:132px;min-height:132px}
+            #<?php echo esc_attr($id); ?> .istt-pb-qr-box canvas,#<?php echo esc_attr($id); ?> .istt-pb-qr-box img{width:116px!important;height:116px!important}
             #<?php echo esc_attr($id); ?> .istt-pb-pagination{gap:8px}
             #<?php echo esc_attr($id); ?> .istt-pb-page-button{min-height:44px;padding:0 11px}
         }
@@ -751,6 +755,14 @@ function istt_phonebook_shortcode($atts)
             #<?php echo esc_attr($id); ?> .istt-pb-tag-links{grid-template-columns:1fr}
             #<?php echo esc_attr($id); ?> .istt-pb-tag-link{min-height:58px}
             #<?php echo esc_attr($id); ?> .istt-pb-pagination>span{font-size:10px}
+            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-content{padding-right:12px;padding-left:12px}
+            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-profile{grid-template-columns:68px minmax(0,1fr);column-gap:11px}
+            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-photo{width:68px;height:68px}
+            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-profile>h2{font-size:18px}
+            #<?php echo esc_attr($id); ?> .istt-pb-sidebar-data>div{padding:7px 8px}
+            #<?php echo esc_attr($id); ?> .istt-pb-qr-section{grid-template-columns:120px minmax(0,1fr);gap:8px 10px}
+            #<?php echo esc_attr($id); ?> .istt-pb-qr-box{width:120px;min-height:120px;padding:7px}
+            #<?php echo esc_attr($id); ?> .istt-pb-qr-box canvas,#<?php echo esc_attr($id); ?> .istt-pb-qr-box img{width:104px!important;height:104px!important}
         }
         @media(prefers-reduced-motion:reduce){#<?php echo esc_attr($id); ?> *,#<?php echo esc_attr($id); ?> *:before,#<?php echo esc_attr($id); ?> *:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
     </style>
