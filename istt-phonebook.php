@@ -1,7 +1,7 @@
 <?php
 /**
  * Snippet Name: ISTT Phonebook
- * Version: 1.0.3
+ * Version: 1.0.4
  * Updated: 2026-09-12
  * Shortcode: [istt_phonebook]
  *
@@ -39,7 +39,27 @@ function istt_pb_normalize_digits($value)
 
 function istt_pb_phone_href($value)
 {
-    return preg_replace('/[^0-9+]/', '', istt_pb_normalize_digits($value));
+    $phone = preg_replace('/[^0-9]/', '', istt_pb_normalize_digits($value));
+
+    if ($phone === '' || strlen($phone) === 11) {
+        return $phone;
+    }
+
+    // Local eight-digit Isfahan numbers need the 031 area code.
+    if (strlen($phone) === 8) {
+        return '031' . $phone;
+    }
+
+    // Also normalize common saved forms: 31xxxxxxxx and 9831xxxxxxxx.
+    if (strlen($phone) === 10 && strpos($phone, '31') === 0) {
+        return '0' . $phone;
+    }
+
+    if (strlen($phone) === 12 && strpos($phone, '9831') === 0) {
+        return '0' . substr($phone, 2);
+    }
+
+    return $phone;
 }
 
 function istt_pb_get_meta_value($post_id, $field_name)
@@ -443,7 +463,7 @@ function istt_pb_render_results($args = [])
             $raw_zone = get_post_meta($post_id, $fields['zone'], true);
             $zone = isset($zones[$raw_zone]) ? $zones[$raw_zone] : istt_pb_format_acf_value(istt_pb_get_meta_value($post_id, $fields['zone']));
             $email    = istt_pb_get_meta_value($post_id, $fields['email']);
-            $external = istt_pb_get_meta_value($post_id, $fields['external_phone']);
+            $external = istt_pb_phone_href(istt_pb_get_meta_value($post_id, $fields['external_phone']));
             $internal = istt_pb_get_meta_value($post_id, $fields['internal_phone']);
         ?>
             <article class="istt-pb-contact-row" style="--pb-row-index:<?php echo esc_attr($index); ?>">
@@ -549,13 +569,10 @@ function istt_phonebook_shortcode($atts)
                         <h2>از کجا شروع کنم؟</h2>
                         <p>موضوع موردنظر خود را انتخاب کنید تا گزینه‌های مرتبط نمایش داده شوند.</p>
                         <div class="istt-pb-tag-links">
-                            <?php $tag_index = 0; foreach ($tags as $tag) : $tag_index++;
-                                $url = get_term_link(absint($tag->term_id), 'post_tag');
-                                if (is_wp_error($url)) { $url = '#'; }
-                            ?>
-                                <a href="<?php echo esc_url($url); ?>" class="istt-pb-tag-link" data-tag-id="<?php echo esc_attr($tag->term_id); ?>" style="--pb-tag-index:<?php echo esc_attr($tag_index); ?>">
+                            <?php $tag_index = 0; foreach ($tags as $tag) : $tag_index++; ?>
+                                <button type="button" class="istt-pb-tag-link" data-tag-id="<?php echo esc_attr($tag->term_id); ?>" aria-pressed="false" style="--pb-tag-index:<?php echo esc_attr($tag_index); ?>">
                                     <?php echo esc_html($tag->name); ?>
-                                </a>
+                                </button>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -616,7 +633,7 @@ function istt_phonebook_shortcode($atts)
         #<?php echo esc_attr($id); ?> .istt-pb-start-section h2{margin:0 0 5px;color:var(--t);font-size:23px}
         #<?php echo esc_attr($id); ?> .istt-pb-start-section>p{margin:0 0 18px;color:var(--m);font-size:13px}
         #<?php echo esc_attr($id); ?> .istt-pb-tag-links{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
-        #<?php echo esc_attr($id); ?> .istt-pb-tag-link{display:flex;min-height:78px;align-items:center;justify-content:center;padding:15px;border:1px solid var(--b);border-radius:10px;background:var(--w);color:var(--t);text-align:center;text-decoration:none;font-size:14px;font-weight:600;line-height:1.8;opacity:0;transform:translateY(12px);animation:pbTag .45s ease forwards;animation-delay:calc(var(--pb-tag-index)*55ms);transition:.22s}
+        #<?php echo esc_attr($id); ?> .istt-pb-tag-link{display:flex;width:100%;min-height:78px;align-items:center;justify-content:center;padding:15px;border:1px solid var(--b);border-radius:10px;background:var(--w);color:var(--t);text-align:center;text-decoration:none;font-size:14px;font-weight:600;line-height:1.8;cursor:pointer;appearance:none;opacity:0;transform:translateY(12px);animation:pbTag .45s ease forwards;animation-delay:calc(var(--pb-tag-index)*55ms);transition:.22s}
         #<?php echo esc_attr($id); ?> .istt-pb-tag-link:hover{transform:translateY(-4px);border-color:var(--a);box-shadow:0 12px 25px rgba(24,61,67,.08)}
         #<?php echo esc_attr($id); ?> .istt-pb-tag-link.active{border-color:var(--a);background:var(--al);color:var(--p)}
         #<?php echo esc_attr($id); ?> .istt-pb-filter-area{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin-top:25px}
@@ -808,8 +825,8 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         f.addEventListener('submit',e=>{e.preventDefault();page.value=1;load()});search.addEventListener('input',()=>{page.value=1;load({delay:350})});
         w.querySelectorAll('.istt-pb-zone').forEach(b=>b.addEventListener('click',()=>{w.querySelectorAll('.istt-pb-zone').forEach(x=>x.classList.remove('active'));b.classList.add('active');zone.value=b.dataset.zone;unit.value='';page.value=1;load({updateUnits:true})}));
         unit.addEventListener('change',()=>{page.value=1;load()});
-        w.querySelectorAll('.istt-pb-tag-link').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const active=a.classList.contains('active');w.querySelectorAll('.istt-pb-tag-link').forEach(x=>x.classList.remove('active'));tag.value=active?'0':a.dataset.tagId;if(!active)a.classList.add('active');page.value=1;load()}));
-        w.querySelector('.istt-pb-reset').addEventListener('click',()=>{search.value='';zone.value='';unit.value='';tag.value='0';page.value='1';w.querySelectorAll('.istt-pb-zone').forEach(x=>x.classList.toggle('active',x.dataset.zone===''));w.querySelectorAll('.istt-pb-tag-link').forEach(x=>x.classList.remove('active'));load({updateUnits:true})});
+        w.querySelectorAll('.istt-pb-tag-link').forEach(a=>a.addEventListener('click',()=>{const active=a.classList.contains('active');w.querySelectorAll('.istt-pb-tag-link').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});tag.value=active?'0':a.dataset.tagId;if(!active){a.classList.add('active');a.setAttribute('aria-pressed','true')}page.value=1;load()}));
+        w.querySelector('.istt-pb-reset').addEventListener('click',()=>{search.value='';zone.value='';unit.value='';tag.value='0';page.value='1';w.querySelectorAll('.istt-pb-zone').forEach(x=>x.classList.toggle('active',x.dataset.zone===''));w.querySelectorAll('.istt-pb-tag-link').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});load({updateUnits:true})});
         r.addEventListener('click',e=>{const pb=e.target.closest('.istt-pb-page-button');if(pb&&!pb.disabled){page.value=pb.dataset.page;load({scroll:true});return}const db=e.target.closest('.istt-pb-details-button');if(!db)return;const id=db.dataset.contactId,t=r.querySelector('#istt-pb-contact-'+id);if(!t)return;lastFocus=db;side.innerHTML='';side.appendChild(t.content.cloneNode(true));layer.classList.add('open');layer.setAttribute('aria-hidden','false');document.body.classList.add('istt-pb-sidebar-open');close.focus();qr(id)});
         function shut(){layer.classList.remove('open');layer.setAttribute('aria-hidden','true');document.body.classList.remove('istt-pb-sidebar-open');setTimeout(()=>side.innerHTML='',350);if(lastFocus)lastFocus.focus()}
         close.addEventListener('click',shut);backdrop.addEventListener('click',shut);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&layer.classList.contains('open'))shut()});
